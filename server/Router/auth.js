@@ -42,23 +42,23 @@ router.post('/register', async(req,res)=>{
     //destrucring re.body data
     const{name,email,phone,pass,Cpass}=req.body;
     if(!name  || !email  || !phone  || !pass  || !Cpass){
-        return res.status(422).json({eroor:"plaese fill the field"});
+        return res.status(422).json({error:"plaese fill the field"});
     }
     try{
         const userExist = await  User.findOne({email:email});
         if(userExist){
-            return res.status(422).json({eroor:"user alredy exits"});
+            return res.status(422).json({error:"user alredy exits"});
             
         }
         else if(pass != Cpass){//for checking if the password entered is matching or not
-            return res.status(422).json({eroor:"password is not matching"});
+            return res.status(422).json({error:"password is not matching"});
 
         }else{
 
             const user=new User( {name,email,phone,pass,Cpass});
             //the middleware pre for useSchema comes here ,it will implement before saving the data to datbase
              await user.save();
-            res.status(201).json({message:"user registered successfully"});          
+            res.status(200).json({message:"user registered successfully"});          
               
         }
     }catch(err){
@@ -71,7 +71,7 @@ router.post('/register', async(req,res)=>{
 
 //user Sign in 
 
-router.post('/Signin', async (req,res)=>{
+router.post('/login', async (req,res)=>{
     let token;
    try {
     let token;
@@ -92,7 +92,7 @@ router.post('/Signin', async (req,res)=>{
         })
 
          if (!isMatch){
-             res.status(200).json({message:"Invalid Credentials"});
+             res.status(402).json({message:"Invalid Credentials"});
             }
             else{//if the password mathes it generates a jwt token after  siging in 
                 res.status(200).json({message:"user signed successfully"});
