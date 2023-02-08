@@ -3,6 +3,7 @@ const express=require('express')
 const router = express.Router();
 const bcrypt =require('bcrypt');
 const jwt =require('jsonwebtoken');
+const authenticate=require("../middleware/authenticate");
 require("../db/conn");
 const User=require("../model/useSchema")
 router.get('/',(req,res)=>{
@@ -112,5 +113,12 @@ router.post('/login', async (req,res)=>{
     console.log(error)
    }
 
-})
+});
+
+
+
+router.get("/about",authenticate,(req,res)=>{
+    console.log("about page");
+    res.send("welcome to abut page");
+});
 module.exports=router;
