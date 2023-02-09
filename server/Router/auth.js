@@ -117,8 +117,8 @@ router.post('/login', async (req,res)=>{
 
 
 
-router.get("/about",authenticate,(req,res)=>{
+router.get("/about",authenticate,(req,res)=>{//authrnticate is a middleware
     console.log("about page");
-    res.send("welcome to abut page");
+    res.send(req.rootUser);
 });
 module.exports=router;
