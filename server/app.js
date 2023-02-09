@@ -2,6 +2,9 @@ const express=require('express');
 const mongoose=require('mongoose');
 const app =express();
 const port=8000;
+const cookieParser = require('cookie-parser');
+
+app.use(cookieParser());
 mongoose.set('strictQuery', true);
 const User=require('./model/useSchema')
 const organiser=require('./model/Organiser')
