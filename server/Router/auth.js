@@ -1,9 +1,13 @@
 const { json } = require('express');
-const express=require('express')
+const express=require('express');
+const app =express();
+
 const router = express.Router();
 const bcrypt =require('bcrypt');
 const jwt =require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
+app.use(cookieParser());
 const authenticate=require("../middleware/authenticate");
 require("../db/conn");
 const User=require("../model/useSchema")
@@ -88,10 +92,11 @@ router.post('/login', async (req,res)=>{
          const isMatch = await bcrypt.compare(pass,userLogin.pass);
          token = await userLogin.generateAuthToken();
                 console.log(token);
-        res.cookie("jwt",token,{
-            expires: new Date(Date.now()+10000),
+        res.cookie("jwtoken",token,{
+            expires: new Date(Date.now()+1000000),
             httpOnly:true
-        })
+        });
+        
 
          if (!isMatch){
              res.status(402).json({message:"Invalid Credentials"});
@@ -120,6 +125,7 @@ router.post('/login', async (req,res)=>{
 
 router.get("/about",authenticate,(req,res)=>{//authrnticate is a middleware
     console.log("about page");
+    
     res.send(req.rootUser);
 });
 module.exports=router;
