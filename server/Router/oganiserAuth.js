@@ -3,7 +3,11 @@ const express=require('express')
 const router = express.Router();
 const bcrypt =require('bcrypt');
 const jwt =require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+
 require("../db/conn");
+const app=express();
+app.use(cookieParser());
 const organiser=require("../model/Organiser")
 // router.get('/',(req,res)=>{
 //     res.send("hello from router auth,js");
@@ -58,9 +62,8 @@ router.post('/Orga-register', async(req,res)=>{
             const orga=new organiser( {name,email,phone,pass,Cpass});
             //the middleware pre for useSchema comes here ,it will implement before saving the data to datbase
              await orga.save();
-            res.status(201).json({message:"user registered successfully"});          
-              
-        }
+            res.status(200).json({message:"user registered successfully"});          
+            }
     }catch(err){
         console.log(err);
     }
@@ -79,17 +82,17 @@ router.post('/Orga-Signin', async (req,res)=>{
     if (!email || !pass){
         return res.status(402).json({error:"invalid login"});
     }
-    const userLogin =await User.findOne({email:email});
+    const userLogin =await organiser.findOne({email:email});
     
     if (userLogin){
          //comparing
          const isMatch = await bcrypt.compare(pass,userLogin.pass);
          token = await userLogin.generateAuthToken();
                 console.log(token);
-        res.cookie("jwt",token,{
+        res.cookie("jwtoken",token,{
             expires: new Date(Date.now()+10000),
             httpOnly:true
-        })
+        })   
 
          if (!isMatch){
              res.status(200).json({message:"Invalid Credentials"});
@@ -103,7 +106,7 @@ router.post('/Orga-Signin', async (req,res)=>{
         }
         else{
             
-            res.json({message:"user not registered "});
+            res.json({message:"organiser not registered "});
        
        }
     

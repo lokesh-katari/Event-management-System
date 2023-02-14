@@ -20,6 +20,9 @@ const events= new mongoose.Schema({
         type:String,
   
      }
+     ,category:{
+        
+     }
     // category:[
     //     {
     //     Workshop:{

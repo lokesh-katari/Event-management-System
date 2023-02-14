@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 
 app.use(cookieParser());
 const authenticate=require("../middleware/authenticate");
+const OrgaAuthentication=require("../middleware/OrgaAuthentication");
 require("../db/conn");
 const User=require("../model/useSchema")
 router.get('/',(req,res)=>{
@@ -68,7 +69,7 @@ router.post('/register', async(req,res)=>{
               
         }
     }catch(err){
-        console.log(err);
+        console.log(err);  
     }
 
 
@@ -78,7 +79,7 @@ router.post('/register', async(req,res)=>{
 //user Sign in 
 
 router.post('/login', async (req,res)=>{
-    let token;
+   
    try {
     let token;
     const{email,pass}=req.body;
@@ -122,10 +123,44 @@ router.post('/login', async (req,res)=>{
 });
 
 
-
-router.get("/about",authenticate,(req,res)=>{//authrnticate is a middleware
+//fro getting the about data the user
+router.get("/aboutO",OrgaAuthentication,(req,res)=>{//authrnticate is a middleware used to authenticate the datailsof the user by token and cookeies
     console.log("about page");
     
     res.send(req.rootUser);
 });
+router.get("/about",authenticate,(req,res)=>{//authrnticate is a middleware used to authenticate the datailsof the user by token and cookeies
+    console.log("about page");
+    
+    res.send(req.rootUser);
+});
+
+//for a
+router.get("/addEvent",authenticate,(req,res)=>{
+    console.log("about page");
+    
+    res.send(req.rootUser);  
+})
+//for submitting the cotact form too the db using post request
+router.post("/contactSub",authenticate, async (req,res)=>{
+    try {
+        const{name,email,phone,message}=req.body;
+        if(!name || !email || !phone || !message){
+            console.log("err in contact from");
+            return res.json({error:"plz fill the contact form"});
+        }
+        else{
+        const userContact=await User.findOne({_id:req.userID});
+        if(userContact){
+            const userMessage=await userContact.addMessage(name,email,phone,message);
+            // await userMessage.save();
+res.status(201).send({message:"contact  from saved"})
+        }
+        }
+    } catch (error) { 
+        console.log(error);
+        console.log("error in conatact page");
+    }
+});
+
 module.exports=router;
