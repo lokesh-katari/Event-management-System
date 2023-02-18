@@ -94,7 +94,7 @@ router.post('/login', async (req,res)=>{
          token = await userLogin.generateAuthToken();
                 console.log(token);
         res.cookie("jwtoken",token,{
-            expires: new Date(Date.now()+1000000),
+            expires: new Date(Date.now()+10000000),
             httpOnly:true
         });
         
@@ -129,18 +129,18 @@ router.get("/aboutO",OrgaAuthentication,(req,res)=>{//authrnticate is a middlewa
     
     res.send(req.rootUser);
 });
-router.get("/about",authenticate,(req,res)=>{//authrnticate is a middleware used to authenticate the datailsof the user by token and cookeies
+router.get("/about",(authenticate),(req,res)=>{//authrnticate is a middleware used to authenticate the datailsof the user by token and cookeies
     console.log("about page");
     
     res.send(req.rootUser);
 });
 
 //for a
-router.get("/addEvent",authenticate,(req,res)=>{
-    console.log("about page");
+// router.get("/addEvent",authenticate,(req,res)=>{
+//     console.log("about page");
     
-    res.send(req.rootUser);  
-})
+//     res.send(req.rootUser);  
+// })
 //for submitting the cotact form too the db using post request
 router.post("/contactSub",authenticate, async (req,res)=>{
     try {

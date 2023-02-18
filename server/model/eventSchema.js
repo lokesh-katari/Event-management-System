@@ -12,36 +12,14 @@ const events= new mongoose.Schema({
         type:Date,
   
      },
+    email: {
+        type:String,
+  
+     },
     mode: {
         type:String,
    
-    },
-    venue: {
-        type:String,
-  
-     }
-     ,category:{
-        
-     }
-    // category:[
-    //     {
-    //     Workshop:{
-    //         type:String 
-    //     },
-    //     Fest:{
-    //         type:String 
-    //     },
-    //     Meet:{
-    //         type:String  
-    //     },
-    //     Quiz:{
-    //         type:String
-    //     }
-    // }
-
-    // ],
-
-});
+    }});
 
 
 const organiserEvent =mongoose.model('organiserEvent',events);

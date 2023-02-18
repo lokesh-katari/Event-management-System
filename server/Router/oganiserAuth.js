@@ -90,7 +90,7 @@ router.post('/Orga-Signin', async (req,res)=>{
          token = await userLogin.generateAuthToken();
                 console.log(token);
         res.cookie("jwtoken",token,{
-            expires: new Date(Date.now()+10000),
+            expires: new Date(Date.now()+10000000),
             httpOnly:true
         })   
 
