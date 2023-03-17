@@ -8,8 +8,8 @@ import ErrorPage from './components/ErrorPage';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddEvent from './components/AddEvent';
 import ContactForm from './components/ContactForm';
-import OrganiserLogin from './components/OrganiserLogin';
-import OrganiserRegister from './components/OrganiserRegister';
+// import OrganiserLogin from './components/OrganiserLogin';
+// import OrganiserRegister from './components/OrganiserRegister';
 import EventList from './components/EventList';
 function App() {
   return (

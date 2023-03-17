@@ -16,11 +16,7 @@ const ContactForm = () => {
     const getData =async()=>{
         try{
           const res=await fetch("/about",{
-            method:"GET",
-            headers:{
-              "Content-Type":"application/json"
-              
-            },
+            method:"GET"
           });
           const data =await res.json();
           console.log(data)
