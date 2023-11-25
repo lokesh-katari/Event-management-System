@@ -41,7 +41,7 @@ const organiser=require("../model/Organiser")
     
 // });
 // using async and await
-router.post('/Orga-register', async(req,res)=>{
+router.post('/register', async(req,res)=>{
     
     //destrucring re.body data
     const{name,email,phone,pass,Cpass}=req.body;
@@ -74,7 +74,7 @@ router.post('/Orga-register', async(req,res)=>{
 
 //user Sign in 
 
-router.post('/Orga-Signin', async (req,res)=>{
+router.post('/Signin', async (req,res)=>{
     let token;
    try {
     // let token;

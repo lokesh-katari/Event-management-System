@@ -44,7 +44,7 @@ router.get('/',(req,res)=>{
     
 // });
 // using async and await
-router.post('/register', async(req,res)=>{
+router.post('auth/register', async(req,res)=>{
     
     //destrucring re.body data
     const{name,email,phone,pass,Cpass}=req.body;
@@ -78,7 +78,7 @@ router.post('/register', async(req,res)=>{
 
 //user Sign in 
 
-router.post('/login', async (req,res)=>{
+router.post('auth/login', async (req,res)=>{
    
    try {
     let token;
@@ -124,12 +124,7 @@ router.post('/login', async (req,res)=>{
 
 
 //fro getting the about data the user
-router.get("/aboutO",OrgaAuthentication,(req,res)=>{//authrnticate is a middleware used to authenticate the datailsof the user by token and cookeies
-    console.log("about page");
-    
-    res.send(req.rootUser);
-});
-router.get("/about",(authenticate),(req,res)=>{//authrnticate is a middleware used to authenticate the datailsof the user by token and cookeies
+router.get("/about",OrgaAuthentication,(req,res)=>{//authrnticate is a middleware used to authenticate the datailsof the user by token and cookeies
     console.log("about page");
     
     res.send(req.rootUser);

@@ -12,13 +12,12 @@ const cors=require( 'cors');//cors can be used when there is a error for ferch i
 app.use(cors());
 app.use(express.json());
 require("./db/conn");
-app.use(require('./Router/auth'));
-app.use(require('./Router/oganiserAuth'));
-app.use(require('./Router/evenRouting'));
+app.use('/auth',require('./Router/auth'));
+app.use('/Organiser',require('./Router/oganiserAuth'));
+app.use('/Event',require('./Router/evenRouting'));
 
-app.get('/',(req,res)=>{
-    res.end('home ')
-});
+
+
 app.listen(port, () => {
     console.log(`started server at port ${port}`);
   });
